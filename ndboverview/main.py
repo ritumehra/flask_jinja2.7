@@ -26,9 +26,12 @@ import textwrap
 import urllib
 
 from google.appengine.ext import ndb
-
 import webapp2
 import snippets
+
+import logging
+
+logger = logging.getLogger('nbdoverview')
 
 # [START greeting]
 class Greeting(ndb.Model):
@@ -48,7 +51,7 @@ class MainPage(webapp2.RequestHandler):
         result = snippets.save_entity(
             snippets.create_entity_using_keyword_arguments())
 
-        print("Result {}".format(result))
+        logger.debug("Result {}".format(result))
         self.response.out.write('<html><body>')
         guestbook_name = self.request.get('guestbook_name')
         ancestor_key = ndb.Key("Book", guestbook_name or "*notitle*")
