@@ -28,7 +28,7 @@ import urllib
 from google.appengine.ext import ndb
 
 import webapp2
-
+import snippets
 
 # [START greeting]
 class Greeting(ndb.Model):
@@ -45,6 +45,10 @@ class Greeting(ndb.Model):
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
+        result = snippets.save_entity(
+            snippets.create_entity_using_keyword_arguments())
+
+        print("Result {}".format(result))
         self.response.out.write('<html><body>')
         guestbook_name = self.request.get('guestbook_name')
         ancestor_key = ndb.Key("Book", guestbook_name or "*notitle*")
