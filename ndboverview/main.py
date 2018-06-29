@@ -21,6 +21,9 @@ For more information, see README.md
 """
 
 # [START all]
+import sys
+sys.path.append('/google/google-cloud-sdk')
+
 import cgi
 import textwrap
 import urllib
@@ -51,7 +54,11 @@ class MainPage(webapp2.RequestHandler):
         result = snippets.save_entity(
             snippets.create_entity_using_keyword_arguments())
 
-        logger.debug("Result {}".format(result))
+        logger.debug("putResult {}".format(result))
+
+        result = snippets.get_entity(result)
+        logger.debug("Get Result {}".format(result))
+
         self.response.out.write('<html><body>')
         guestbook_name = self.request.get('guestbook_name')
         ancestor_key = ndb.Key("Book", guestbook_name or "*notitle*")
